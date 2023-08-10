@@ -1,0 +1,19 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.message-list {
+  height: 80%;
+  overflow-y: scroll;
+  .rce-mbox-right {
+    background: orange;
+    color: white;
+    box-shadow: none;
+    .rce-mbox-right-notch {
+      display: none;
+    }
+  }
+}
