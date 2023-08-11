@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "react-chat-elements/dist/main.css";
 import { MessageBox, MessageList, SystemMessage } from "react-chat-elements";
 import { ChatList } from "react-chat-elements";
 import "./App.scss";
+import ListChat from "./ListChat.jsx";
+import { createUUID } from "./createUUID";
 function App() {
   const [dataSource, setDataSource] = useState([
     {
+      id: createUUID(),
       position: "left",
       type: "text",
       text: "Can I help u!",
@@ -17,6 +20,7 @@ function App() {
   const [isSuggest, setIsSuggest] = useState(false);
   const [isAnswer, setIsAnswer] = useState(false);
   const [isChat, setIsChat] = useState(true);
+  const mesRef = useRef(null);
 
   useEffect(() => {
     const length = dataSource?.length;
@@ -25,6 +29,7 @@ function App() {
         setDataSource((prev) => {
           const clone = [...prev];
           clone.push({
+            id: createUUID(),
             position: "left",
             type: "text",
             text: "Good question",
@@ -32,6 +37,8 @@ function App() {
           return clone;
         });
         setIsAnswer(false);
+        // mesRef.current.scrollBottom()
+        console.log("mesRef", mesRef.current.height);
       }, 2000);
     }
 
@@ -46,6 +53,7 @@ function App() {
     setDataSource((prev) => {
       const clone = [...prev];
       clone.push({
+        id: createUUID(),
         position: "right",
         type: "text",
         text: dataInput,
@@ -60,6 +68,7 @@ function App() {
     setDataSource((prev) => {
       const clone = [...prev];
       clone.push({
+        id: createUUID(),
         position: "right",
         type: "text",
         text: dataSuggest,
@@ -72,11 +81,11 @@ function App() {
   };
 
   const handleKeyDown = (e) => {
-    console.log("e.key", e.key);
     if (e.key === "Enter") {
       setDataSource((prev) => {
         const clone = [...prev];
         clone.push({
+          id: createUUID(),
           position: "right",
           type: "text",
           text: dataInput,
@@ -110,15 +119,17 @@ function App() {
               X
             </button>
           </div>
-          <MessageList
+          <ListChat width={500} height={300} dataSource={dataSource} />
+          {/* <MessageList
+            referance={mesRef}
             className="message-list"
-            lockable={true}
-            toBottomHeight={"100%"}
+            lockable
+            toBottomHeight="100%"
             dataSource={dataSource}
           />
           {isAnswer && (
             <SystemMessage text="The system is processing. Please wait a second..." />
-          )}
+          )} */}
 
           <div style={{ display: "flex", gap: 8, position: "relative" }}>
             {isSuggest && (
@@ -153,13 +164,6 @@ function App() {
       )}
     </>
   );
-  // <MessageBox
-  //     position={"left"}
-  //     type={"text"}
-  //     title={"Message Box Title"}
-  //     text="Here is a text type message box"
-  //   />
-  // );
 }
 
 export default App;

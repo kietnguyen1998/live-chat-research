@@ -3,11 +3,12 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color: black;
 }
 
 .message-list {
   height: 80%;
-  overflow-y: scroll;
+  // overflow: auto;
   .rce-mbox-right {
     background: orange;
     color: white;
@@ -16,4 +17,41 @@
       display: none;
     }
   }
+}
+
+// custom
+
+.list-chat {
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  // justify-content: flex-end;
+  // flex-direction: column;
+
+}
+
+.mc-container {
+  display: flex;
+  margin-left: 8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+
+  &:first-child {
+    margin-top: auto !important;
+  }
+  &-right {
+    justify-content: end;
+
+    .mc-box {
+      margin-right: 8px;
+      background: orangered;
+      color: white;
+    }
+  }
+}
+
+.mc-box {
+  padding: 8px 16px;
+  background: white;
+  border-radius: 8px;
 }
